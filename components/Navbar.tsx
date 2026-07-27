@@ -21,7 +21,7 @@ const Navbar = () => {
 
   const { user } = useUser();
   return (
-    <header className="w-full fixed z-50 bg-('--bg-primary')">
+    <header className="w-full fixed z-50 bg-[var(--bg-primary)]">
       <div className="wrapper navbar-height py-4 flex justify-between items-center">
         <Link href="/" className="flex gap-0.5 items-center">
           <Image
@@ -51,23 +51,22 @@ const Navbar = () => {
               </Link>
             );
           })}
+          <div className="flex gap-7.5 items-center">
+            <Show when="signed-out">
+              <SignInButton mode="modal" />
+            </Show>
+            <Show when="signed-in">
+              <div className="nav-user-link">
+                <UserButton />
+                {user?.firstName && (
+                  <Link className="nav-user-name" href="subscriptions">
+                    {user.firstName}
+                  </Link>
+                )}
+              </div>
+            </Show>
+          </div>
         </nav>
-
-        <div className="flex gap-7.5 items-center">
-          <Show when="signed-out">
-            <SignInButton mode="modal" />
-          </Show>
-          <Show when="signed-in">
-            <div className="nav-user-link">
-              <UserButton />
-              {user?.firstName && (
-                <Link className="nav-user-name" href="subscriptions">
-                  {user.firstName}
-                </Link>
-              )}
-            </div>
-          </Show>
-        </div>
       </div>
     </header>
   );
