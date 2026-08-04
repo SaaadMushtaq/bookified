@@ -1,22 +1,30 @@
 import BookCard from "@/components/BookCard";
 import HeroSection from "@/components/HeroSection";
-import { sampleBooks } from "@/lib/constants";
+import { getAllBooks } from "@/lib/actions/book.actions";
 
-const page = () => {
+const page = async () => {
+  const response = await getAllBooks();
+
+  const books = response?.success ? (response.data ?? []) : [];
+  console.log("Books fetched from database:", books);
   return (
     <main className="wrapper container">
       <HeroSection />
 
       <div className="library-books-grid">
-        {sampleBooks.map(({ title, author, coverURL, slug }, _id) => (
-          <BookCard
-            key={_id}
-            title={title}
-            author={author}
-            coverURL={coverURL}
-            slug={slug}
-          />
-        ))}
+        {books?.length > 0 ? (
+          books.map(({ title, author, coverURL, slug }, _id) => (
+            <BookCard
+              key={_id}
+              title={title}
+              author={author}
+              coverURL={coverURL}
+              slug={slug}
+            />
+          ))
+        ) : (
+          <p>No books available.</p>
+        )}
       </div>
     </main>
   );

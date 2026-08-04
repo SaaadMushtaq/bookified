@@ -15,6 +15,7 @@ const BookCard: FC<BookCardProps> = ({ title, author, coverURL, slug }) => {
               width={133}
               height={200}
               className="book-card-cover"
+              unoptimized
             />
           </div>
 
